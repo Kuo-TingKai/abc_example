@@ -175,13 +175,14 @@ class TateCurve:
         
         return points
     
-    def plot_curve(self, x_range=(-2, 2), num_points=100):
+    def plot_curve(self, x_range=(-2, 2), num_points=100, save_path=None):
         """
         Plot the Tate curve.
         
         Args:
             x_range: Range of x values to plot
             num_points: Number of points for plotting
+            save_path: Path to save the plot (optional)
         """
         points = self.compute_points(x_range, num_points)
         
@@ -195,7 +196,12 @@ class TateCurve:
             plt.title(f'Tate Curve E_q with q = {self.q:.6f}, p = {self.p}')
             plt.grid(True, alpha=0.3)
             plt.axis('equal')
-            plt.show()
+            
+            if save_path:
+                plt.savefig(save_path, dpi=300, bbox_inches='tight')
+                print(f"Plot saved to: {save_path}")
+            else:
+                plt.show()
     
     def __str__(self):
         """String representation of the Tate curve."""
@@ -241,7 +247,7 @@ def demonstrate_tate_curve():
     
     # Plot the curve
     print("\nGenerating plot...")
-    tate.plot_curve()
+    tate.plot_curve(save_path="plots/tate_curve.png")
     
     return tate
 

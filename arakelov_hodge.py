@@ -135,13 +135,14 @@ class HeightCalculator:
         
         return heights
     
-    def plot_height_distribution(self, heights, bins=50):
+    def plot_height_distribution(self, heights, bins=50, save_path=None):
         """
         Plot height distribution histogram.
         
         Args:
             heights: List of heights
             bins: Number of histogram bins
+            save_path: Path to save the plot (optional)
         """
         plt.figure(figsize=(10, 6))
         plt.hist(heights, bins=bins, alpha=0.7, edgecolor='black')
@@ -149,7 +150,12 @@ class HeightCalculator:
         plt.ylabel('Frequency')
         plt.title('Distribution of Heights of Rational Points')
         plt.grid(True, alpha=0.3)
-        plt.show()
+        
+        if save_path:
+            plt.savefig(save_path, dpi=300, bbox_inches='tight')
+            print(f"Height distribution plot saved to: {save_path}")
+        else:
+            plt.show()
     
     def compare_heights(self, points):
         """
@@ -259,7 +265,7 @@ class ArakelovExamples:
         print(f"Max height: {max(heights):.4f}")
         
         # Plot distribution
-        self.calculator.plot_height_distribution(heights)
+        self.calculator.plot_height_distribution(heights, save_path="plots/height_distribution.png")
     
     def demonstrate_elliptic_curve_heights(self):
         """

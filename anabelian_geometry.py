@@ -186,13 +186,14 @@ class BelyiMap:
         
         return G
     
-    def plot_dessin(self, G, title="Dessin d'enfant"):
+    def plot_dessin(self, G, title="Dessin d'enfant", save_path=None):
         """
         Plot dessin d'enfant graph.
         
         Args:
             G: NetworkX graph
             title: Plot title
+            save_path: Path to save the plot (optional)
         """
         plt.figure(figsize=(10, 8))
         
@@ -212,7 +213,12 @@ class BelyiMap:
         plt.title(title, fontsize=14, fontweight='bold')
         plt.axis('off')
         plt.tight_layout()
-        plt.show()
+        
+        if save_path:
+            plt.savefig(save_path, dpi=300, bbox_inches='tight')
+            print(f"Dessin plot saved to: {save_path}")
+        else:
+            plt.show()
 
 
 class MonodromyExplorer:
@@ -248,7 +254,8 @@ class MonodromyExplorer:
             
             # Generate dessin
             dessin = self.belyi.dessin_denfant(sigma_0, sigma_1, sigma_inf)
-            self.belyi.plot_dessin(dessin, f"Dessin {i+1}: σ₀={sigma_0}, σ₁={sigma_1}, σ∞={sigma_inf}")
+            self.belyi.plot_dessin(dessin, f"Dessin {i+1}: σ₀={sigma_0}, σ₁={sigma_1}, σ∞={sigma_inf}", 
+                                 save_path=f"plots/dessin_{i+1}.png")
     
     def analyze_simple_belyi(self):
         """
@@ -294,7 +301,8 @@ class MonodromyExplorer:
         plt.ylim(-0.5, 2)
         
         plt.tight_layout()
-        plt.show()
+        plt.savefig("plots/belyi_map_analysis.png", dpi=300, bbox_inches='tight')
+        print("Belyi map analysis plot saved to: plots/belyi_map_analysis.png")
 
 
 def demonstrate_anabelian_geometry():

@@ -177,12 +177,13 @@ class MonoidFrobenioid:
         
         return objects_data
     
-    def plot_degree_comparison(self, max_n=20):
+    def plot_degree_comparison(self, max_n=20, save_path=None):
         """
         Plot comparison between original degree and new scale function.
         
         Args:
             max_n: Maximum value to plot
+            save_path: Path to save the plot (optional)
         """
         n_values = list(range(1, max_n + 1))
         original_degrees = [self.degree_function(n) for n in n_values]
@@ -223,14 +224,20 @@ class MonoidFrobenioid:
         plt.grid(True, alpha=0.3)
         
         plt.tight_layout()
-        plt.show()
+        
+        if save_path:
+            plt.savefig(save_path, dpi=300, bbox_inches='tight')
+            print(f"Degree comparison plot saved to: {save_path}")
+        else:
+            plt.show()
     
-    def plot_frobenioid_graph(self, max_n=10):
+    def plot_frobenioid_graph(self, max_n=10, save_path=None):
         """
         Plot the Frobenioid as a directed graph.
         
         Args:
             max_n: Maximum object value to include
+            save_path: Path to save the plot (optional)
         """
         G = nx.DiGraph()
         
@@ -265,7 +272,12 @@ class MonoidFrobenioid:
         plt.title(f'Frobenioid Graph (Objects 1-{max_n})', fontsize=14, fontweight='bold')
         plt.axis('off')
         plt.tight_layout()
-        plt.show()
+        
+        if save_path:
+            plt.savefig(save_path, dpi=300, bbox_inches='tight')
+            print(f"Frobenioid graph saved to: {save_path}")
+        else:
+            plt.show()
 
 
 class FrobenioidExamples:
@@ -356,10 +368,10 @@ class FrobenioidExamples:
         print("\n=== Visualizations ===\n")
         
         print("Generating degree comparison plot...")
-        self.frobenioid.plot_degree_comparison(max_n=15)
+        self.frobenioid.plot_degree_comparison(max_n=15, save_path="plots/frobenioid_degree_comparison.png")
         
         print("Generating Frobenioid graph...")
-        self.frobenioid.plot_frobenioid_graph(max_n=8)
+        self.frobenioid.plot_frobenioid_graph(max_n=8, save_path="plots/frobenioid_graph.png")
 
 
 def demonstrate_frobenioid():
